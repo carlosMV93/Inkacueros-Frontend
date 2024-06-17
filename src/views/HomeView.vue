@@ -30,6 +30,19 @@
             <CarrouselCards />
           </div>
         </div>
+        <div class="pt-10">
+          <div class="flex justify-between items-center">
+            <div>
+              <img :src="logoInkacueros" alt="" class="w-[15rem]" />
+            </div>
+            <div class="flex gap-2">
+              <v-btn icon="mdi mdi-facebook" variant="text"></v-btn>
+              <v-btn icon="mdi mdi-twitter" variant="text"></v-btn>
+              <v-btn icon="mdi mdi-linkedin" variant="text"></v-btn>
+              <v-btn icon="mdi mdi-instagram" variant="text"></v-btn>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -37,12 +50,14 @@
 <script>
 import CarrouselCards from "@/components/home/CarrouselCards.vue";
 import CarrouselSlide from "@/components/home/CarrouselSlide.vue";
+import logoInkacueros from "@/assets/logoInkakueros.png";
 import producto1 from "@/assets/producto02.png";
 import producto2 from "@/assets/producto03.png";
 
 export default {
   data() {
     return {
+      logoInkacueros,
       producto1,
       producto2,
     };
