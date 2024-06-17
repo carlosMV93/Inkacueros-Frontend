@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex justify-center items-center">
-    <div class="pb-10">
+    <div class="pb-10 pt-15">
       <v-card
         class="mx-auto pa-12 pb-8"
         elevation="8"
@@ -11,6 +11,16 @@
         <div class="flex justify-center">
           <v-btn icon="mdi mdi-lock" variant="tonal" color="indigo"></v-btn>
         </div>
+        <div class="text-subtitle-1 text-medium-emphasis">Correo</div>
+
+        <v-text-field
+          density="compact"
+          placeholder="Ingrese su correo"
+          prepend-inner-icon="mdi-email"
+          variant="outlined"
+          color="brown-darken-1"
+          v-model="email"
+        ></v-text-field>
         <div class="text-subtitle-1 text-medium-emphasis">Usuario</div>
 
         <v-text-field
@@ -55,26 +65,27 @@
           size="large"
           variant="tonal"
           block
-          @click="validateCredentials"
+          @click="onCreateUser"
         >
-          Ingresar
+          Registrarse
         </v-btn>
 
         <v-card-text class="text-center">
-          <router-link to="/register" class="item-nav" href="/register">
+          <router-link to="/login" class="item-nav" href="/login">
             <a
               class="text-brown text-decoration-none"
               href="#"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Registrarse <v-icon icon="mdi-chevron-right"></v-icon>
+              <v-icon icon="mdi-chevron-left"></v-icon>Ingresar
             </a>
           </router-link>
         </v-card-text>
       </v-card>
     </div>
   </div>
+
   <v-dialog v-model="dialogLoader" :scrim="false" persistent width="auto">
     <v-card color="brown-darken-1">
       <v-card-text>
@@ -89,10 +100,10 @@
   </v-dialog>
 </template>
 <script>
-import { useRouter } from "vue-router";
-import { loginApi } from "@/api/UsersService";
+import { createUserApi } from "@/api/UsersService";
+import { basicAlert } from "@/helpers/SweetAlert";
 import { validateError } from "@/helpers/Validators";
-import store from "@/store";
+import { useRouter } from "vue-router";
 import { ref } from "vue";
 
 export default {
@@ -102,34 +113,51 @@ export default {
   setup() {
     const router = useRouter();
     const username = ref("");
+    const email = ref("");
     const password = ref("");
     const dialogLoader = ref(false);
 
-    const validateCredentials = () => {
-      dialogLoader.value = true;
-      const data = {
-        username: username.value,
-        password: password.value,
-      };
-      loginApi(data)
-        .then((response) => {
-          dialogLoader.value = false;
-          console.log("---------------------------");
-          console.log(response.data);
-          store.commit("setUsername", response.data.username);
-          store.commit("setIsAuthenticated", true);
-          router.push("/");
-        })
-        .catch((error) => {
-          dialogLoader.value = false;
-          validateError(error.response);
-        });
+    const onCreateUser = () => {
+      if (username.value != "" && email.value != "" && password.value != "") {
+        dialogLoader.value = true;
+        const data = {
+          username: username.value,
+          email: email.value,
+          password: password.value,
+          is_staff: true,
+          is_superuser: true,
+        };
+        createUserApi(data)
+          .then(() => {
+            dialogLoader.value = false;
+            basicAlert(
+              () => {
+                router.push("/login");
+              },
+              "success",
+              "Logrado",
+              "Se ha registrado el usuario correctamente"
+            );
+          })
+          .catch((error) => {
+            dialogLoader.value = false;
+            validateError(error.response);
+          });
+      } else {
+        basicAlert(
+          () => {},
+          "warning",
+          "Advertencia",
+          "Verfique que los campos no sean vacios"
+        );
+      }
     };
 
     return {
-      validateCredentials,
+      onCreateUser,
       dialogLoader,
       username,
+      email,
       password,
     };
   },

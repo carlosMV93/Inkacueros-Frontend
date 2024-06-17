@@ -16,15 +16,27 @@ const router = createRouter({
           path: "",
           component: () => import("@/views/HomeView.vue"),
         },
+        {
+          path: "/products",
+          name: "products",
+          component: () => import("@/views/ProductsView.vue"),
+        },
+        {
+          path: "/contacts",
+          name: "contacts",
+          component: () => import("@/views/ContactsView.vue"),
+        },
+        {
+          path: "/login",
+          name: "login",
+          component: () => import("@/views/LoginView.vue"),
+        },
+        {
+          path: "/register",
+          name: "register",
+          component: () => import("@/views/RegisterView.vue"),
+        },
       ],
-    },
-    {
-      meta: {
-        title: "Login",
-      },
-      path: "/login",
-      name: "login",
-      component: () => import("@/views/LoginView.vue"),
     },
   ],
 });
