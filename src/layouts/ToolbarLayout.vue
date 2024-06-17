@@ -55,7 +55,7 @@ import store from "@/store";
 import { ref } from "vue";
 export default {
   setup() {
-    const isAuthenticated = ref(store.state.role);
+    const isAuthenticated = ref(store.state.isAuthenticated);
     const username = ref(store.state.username);
     return {
       isAuthenticated,
