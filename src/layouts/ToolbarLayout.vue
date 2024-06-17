@@ -1,27 +1,27 @@
 <template>
-  <v-toolbar color="blue-darken-2" dark fixed app>
-    <div class="w-full flex justify-between items-center px-3">
-      <div>Sports Center</div>
+  <v-toolbar color="brown-darken-1" dark fixed app>
+    <div class="w-full flex justify-between items-center px-10">
+      <div class="font-bold">Inkacueros</div>
       <div class="flex gap-4 items-center list-none">
         <router-link to="/" class="item-nav" href="/">
           <li
             class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer"
           >
-            Home
+            Inicio
           </li>
         </router-link>
         <router-link to="/home" class="item-nav" href="/home">
           <li
             class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer"
           >
-            Store
+            Productos
           </li>
         </router-link>
         <router-link to="/home" class="item-nav" href="/home">
           <li
             class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer"
           >
-            Contact
+            Contactanos
           </li>
         </router-link>
       </div>
@@ -38,8 +38,11 @@ export default {};
 </script>
 <style scoped>
 .item-nav {
+  padding: 0.5rem 1rem;
+
   &.router-link-exact-active {
-    border-bottom: 2px solid red;
+    border-radius: 5px;
+    background-color: rgb(163, 102, 61);
   }
 }
 </style>
