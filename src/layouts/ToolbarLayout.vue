@@ -28,18 +28,20 @@
         </router-link>
       </div>
       <div class="flex gap-4 items-center list-none">
-        <div class="relative py-2">
-          <v-btn icon>
-            <v-icon>mdi-cart</v-icon>
-          </v-btn>
-          <div v-if="cartItemCount > 0" class="absolute top-0 right-0">
-            <p
-              class="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
-            >
-              {{ cartItemCount }}
-            </p>
+        <router-link to="/trolley" class="item-nav" href="/trolley">
+          <div class="relative py-2">
+            <v-btn icon>
+              <v-icon>mdi-cart</v-icon>
+            </v-btn>
+            <div v-if="cartItemCount > 0" class="absolute top-0 right-0">
+              <p
+                class="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+              >
+                {{ cartItemCount }}
+              </p>
+            </div>
           </div>
-        </div>
+        </router-link>
         <template v-if="statusAuthenticated">
           <span>Hola, {{ username }}</span>
           <v-btn icon="mdi mdi-logout" color="white" @click="logout"></v-btn>

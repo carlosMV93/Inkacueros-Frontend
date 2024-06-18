@@ -28,7 +28,7 @@ const router = createRouter({
           beforeEnter: (to, from, next) => {
             const hasIdParam = to.params.id;
             if (!hasIdParam) {
-              next({ name: 'home' }); // Redirige a 'home' si no hay ID
+              next({ name: "home" }); // Redirige a 'home' si no hay ID
             } else {
               next();
             }
@@ -38,6 +38,11 @@ const router = createRouter({
           path: "/contacts",
           name: "contacts",
           component: () => import("@/views/ContactsView.vue"),
+        },
+        {
+          path: "/trolley",
+          name: "trolley",
+          component: () => import("@/views/TrolleyView.vue"),
         },
         {
           path: "/login",
