@@ -33,7 +33,7 @@
         <div class="pt-10">
           <div class="flex justify-between items-center">
             <div>
-              <img :src="logoInkacueros" alt="" class="w-[15rem]" />
+              <img :src="logoInkacueros" alt="" class="w-[10rem]" />
             </div>
             <div class="flex gap-2">
               <v-btn icon="mdi mdi-facebook" variant="text"></v-btn>

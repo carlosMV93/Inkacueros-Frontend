@@ -21,42 +21,48 @@
     </v-card-text>
 
     <v-card-actions class="mt-auto">
-      <v-btn color="deep-purple-accent-4" variant="tonal" size="small">Agregar al carrito</v-btn>
-      <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="goDetailProduct(product.id)">Ver
-        más</v-btn>
+      <v-btn color="deep-purple-accent-4" variant="tonal" size="small"
+        >Agregar al carrito</v-btn
+      >
+      <v-btn
+        color="deep-purple-accent-4"
+        variant="tonal"
+        size="small"
+        @click="goDetailProduct(product)"
+        >Ver más</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
 <script>
-import producto1 from '@/assets/products/img1.jpeg';
-import producto2 from '@/assets/products/img2.jpeg';
-import producto3 from '@/assets/products/img3.jpg';
-import producto4 from '@/assets/products/img4.jpg';
+import producto1 from "@/assets/products/img1.png";
+import producto2 from "@/assets/products/img2.png";
+import producto3 from "@/assets/products/img3.jpg";
+import producto4 from "@/assets/products/img4.jpg";
 
-export default ({
+export default {
   props: {
-    product: Object
+    product: Object,
   },
-  emits: ['go-detail'],
+  emits: ["go-detail"],
   setup(_, { emit }) {
-
-    const goDetailProduct = (productId) => {
-      emit('go-detail', {
-        productId
-      })
-    }
+    const goDetailProduct = (product) => {
+      emit("go-detail", {
+        product,
+      });
+    };
 
     return {
       goDetailProduct,
-    }
+    };
   },
   data() {
     return {
       producto1,
       producto2,
       producto3,
-      producto4
-    }
-  }
-})
+      producto4,
+    };
+  },
+};
 </script>

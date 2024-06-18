@@ -8,6 +8,8 @@ export default createStore({
     isAuthenticated: false,
     username: "",
     token: "",
+    productDetail: {},
+    trolley: [],
   },
   getters: {},
   mutations: {
@@ -21,6 +23,14 @@ export default createStore({
     },
     setToken(state, value) {
       state.token = value;
+      localStorage.setItem(localStorageKey, JSON.stringify(state));
+    },
+    setProductDetail(state, value) {
+      state.productDetail = value;
+      localStorage.setItem(localStorageKey, JSON.stringify(state));
+    },
+    setTrolley(state, value) {
+      state.trolley = value;
       localStorage.setItem(localStorageKey, JSON.stringify(state));
     },
     // Agregar una mutación para inicializar el estado desde localStorage al cargar la página

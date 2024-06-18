@@ -2,7 +2,12 @@
   <div class="p-10">
     <div class="w-full grid grid-cols-4">
       <div class="col-span-1 p-4">
-        <v-text-field placeholder="Buscar producto" variant="outlined" density="compact" color="indigo"></v-text-field>
+        <v-text-field
+          placeholder="Buscar producto"
+          variant="outlined"
+          density="compact"
+          color="indigo"
+        ></v-text-field>
         <v-card class="mx-auto shadow-lg w-full">
           <v-card-text>
             <div>Orden</div>
@@ -17,7 +22,12 @@
             <div>Categoria</div>
             <v-radio-group v-model="typeSelect" color="indigo">
               <v-radio label="Todos" value="0"></v-radio>
-              <v-radio :label="type.Name" :value="type.id" v-for="type in dataTypes" :key="type.id"></v-radio>
+              <v-radio
+                :label="type.Name"
+                :value="type.id"
+                v-for="type in dataTypes"
+                :key="type.id"
+              ></v-radio>
             </v-radio-group>
           </v-card-text>
         </v-card>
@@ -26,14 +36,23 @@
             <div>Marca</div>
             <v-radio-group v-model="brandSelect" color="indigo">
               <v-radio label="Todos" value="0"></v-radio>
-              <v-radio :label="brand.Name" :value="brand.id" v-for="brand in dataBrand" :key="brand.id"></v-radio>
+              <v-radio
+                :label="brand.Name"
+                :value="brand.id"
+                v-for="brand in dataBrand"
+                :key="brand.id"
+              ></v-radio>
             </v-radio-group>
           </v-card-text>
         </v-card>
       </div>
       <div class="col-span-3 container_cards_products auto-rows-min">
-        <CardProduct :product="product" v-for="product in sortedProducts" :key="product.id"
-          @go-detail="goDetailProduct" />
+        <CardProduct
+          :product="product"
+          v-for="product in sortedProducts"
+          :key="product.id"
+          @go-detail="goDetailProduct"
+        />
       </div>
     </div>
   </div>
@@ -41,21 +60,26 @@
     <v-card color="brown-darken-1">
       <v-card-text>
         Procesando...
-        <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        <v-progress-linear
+          indeterminate
+          color="white"
+          class="mb-0"
+        ></v-progress-linear>
       </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import { findAllBrandsApi } from '@/api/BrandService';
-import { findAllProductsApi } from '@/api/ProductsService';
-import { findAllTypesApi } from '@/api/TypesService';
-import CardProduct from '@/components/products/CardProducts.vue';
-import { onMounted, ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { findAllBrandsApi } from "@/api/BrandService";
+import { findAllProductsApi } from "@/api/ProductsService";
+import { findAllTypesApi } from "@/api/TypesService";
+import CardProduct from "@/components/products/CardProducts.vue";
+import { onMounted, ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import store from "@/store";
 
-export default ({
+export default {
   components: { CardProduct },
   setup() {
     const dataBrand = ref([]);
@@ -74,7 +98,12 @@ export default ({
     });
 
     const readyData = async () => {
-      const [brandsResponse, typesResponse, productsResponse] = await Promise.all([findAllBrandsApi(), findAllTypesApi(), findAllProductsApi()]);
+      const [brandsResponse, typesResponse, productsResponse] =
+        await Promise.all([
+          findAllBrandsApi(),
+          findAllTypesApi(),
+          findAllProductsApi(),
+        ]);
       dataBrand.value = brandsResponse.data;
       dataTypes.value = typesResponse.data;
       dataProducts.value = productsResponse.data;
@@ -85,12 +114,16 @@ export default ({
 
       // Filtrar por tipo
       if (typeSelect.value != 0) {
-        products = products.filter(product => product.IdType.id === typeSelect.value);
+        products = products.filter(
+          (product) => product.IdType.id === typeSelect.value
+        );
       }
 
       // Filtrar por marca
       if (brandSelect.value != 0) {
-        products = products.filter(product => product.IdBrand.id === brandSelect.value);
+        products = products.filter(
+          (product) => product.IdBrand.id === brandSelect.value
+        );
       }
 
       // Ordenar productos
@@ -105,7 +138,8 @@ export default ({
 
     const goDetailProduct = async (data) => {
       dialogLoader.value = false;
-      router.push(`detail_product/${data.productId}`);
+      store.commit("setProductDetail", data.product);
+      router.push(`detail_product/${data.product.id}`);
     };
 
     return {
@@ -117,10 +151,10 @@ export default ({
       dataProducts,
       dialogLoader,
       dataBrand,
-      dataTypes
+      dataTypes,
     };
-  }
-});
+  },
+};
 </script>
 
 <style>
