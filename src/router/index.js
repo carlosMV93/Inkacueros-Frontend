@@ -22,6 +22,19 @@ const router = createRouter({
           component: () => import("@/views/ProductsView.vue"),
         },
         {
+          path: "/detail_product",
+          name: "detail_product/:id",
+          component: () => import("@/views/DetailProductView.vue"),
+          beforeEnter: (to, from, next) => {
+            const hasIdParam = to.params.id;
+            if (!hasIdParam) {
+              next({ name: 'home' });
+            } else {
+              next();
+            }
+          },
+        },
+        {
           path: "/contacts",
           name: "contacts",
           component: () => import("@/views/ContactsView.vue"),
