@@ -22,13 +22,13 @@ const router = createRouter({
           component: () => import("@/views/ProductsView.vue"),
         },
         {
-          path: "/detail_product",
-          name: "detail_product/:id",
+          path: "/detail_product/:id",
+          name: "detail_product",
           component: () => import("@/views/DetailProductView.vue"),
           beforeEnter: (to, from, next) => {
             const hasIdParam = to.params.id;
             if (!hasIdParam) {
-              next({ name: 'home' });
+              next({ name: 'home' }); // Redirige a 'home' si no hay ID
             } else {
               next();
             }

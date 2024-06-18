@@ -105,7 +105,7 @@ export default ({
 
     const goDetailProduct = async (data) => {
       dialogLoader.value = false;
-      router.push(`/detail_product/${data.productId}`);
+      router.push(`detail_product/${data.productId}`);
     };
 
     return {
