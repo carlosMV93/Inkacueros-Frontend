@@ -82,6 +82,7 @@
   </div>
 </template>
 <script>
+import { useRouter } from "vue-router";
 import store from "@/store";
 import { onMounted, ref, computed } from "vue";
 import ImgComponentVue from '@/components/generales/ImgComponent.vue';
@@ -89,6 +90,7 @@ import ImgComponentVue from '@/components/generales/ImgComponent.vue';
 export default {
   components: { ImgComponentVue },
   setup() {
+    const router = useRouter();
     const dataTrolley = ref([]);
 
     const increment = (index) => {
@@ -120,7 +122,7 @@ export default {
     });
 
     const onCheckout = () => {
-
+      router.push("/checkout");
     }
 
     return {
