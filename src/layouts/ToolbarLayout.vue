@@ -92,6 +92,7 @@ export default {
     const isAuthenticated = ref(store.state.isAuthenticated);
 
     const logout = () => {
+      store.commit("setTrolley", []);
       store.commit("setIsAuthenticated", false);
     };
 

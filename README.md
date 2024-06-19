@@ -1,6 +1,5 @@
-# Prueba Inlearning
+# Ecommerce Inkacueros
 
-Este proyecto es una plataforma desarrollada con Vue.js que permite la gestión de cursos y alumnos. A continuación, se detallan los pasos para la configuración y ejecución del proyecto.
 
 ## Configuración del Proyecto
 
@@ -30,7 +29,7 @@ El resultado se guardará en la carpeta `dist`, lista para ser desplegada en un 
 
 1. **Clonar el Repositorio**
    ```bash
-   git clone https://github.com/silverblade34/prueba_inlearning.git
+   git clone https://github.com/silverblade34/ecommerce_inkacueros.git
    cd prueba_inlearning
    ```
 2. **Instalar Dependencias**

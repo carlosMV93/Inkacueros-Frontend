@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in dataTrolley" :key="item.product.id">
+            <tr v-for="(item, index) in dataTrolley" :key="item.product.id">
               <td>
                 <div class="w-[4rem]">
                   <ImgComponentVue :product="item.product" />
@@ -23,9 +23,9 @@
               </td>
               <td>{{ item.product.Name }}</td>
               <td>{{ item.product.Price }}</td>
-              <td class="flex justify-start items-center">
-                <div class="relative flex items-center max-w-[8rem] mt-5">
-                  <button type="button" @click="decrement"
+              <td>
+                <div class="relative flex items-center max-w-[8rem]">
+                  <button type="button" @click="decrement(index)"
                     class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-l-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
                     <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                       viewBox="0 0 18 2">
@@ -33,10 +33,10 @@
                         d="M1 1h16" />
                     </svg>
                   </button>
-                  <input type="text" id="quantity-input" v-model="quantity"
+                  <input type="text" v-model="item.amount"
                     class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5"
                     required />
-                  <button type="button" @click="increment"
+                  <button type="button" @click="increment(index)"
                     class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-r-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
                     <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                       viewBox="0 0 18 18">
@@ -46,9 +46,9 @@
                   </button>
                 </div>
               </td>
-              <td>{{ subTotal }}</td>
+              <td>{{ item.amount * item.product.Price }}</td>
               <td>
-                <v-btn icon="mdi-delete" variant="tonal" size="small" color="red"></v-btn>
+                <v-btn icon="mdi-delete" variant="tonal" size="small" color="red" @click="removeItem(index)"></v-btn>
               </td>
             </tr>
           </tbody>
@@ -62,7 +62,7 @@
               <div class="flex flex-col border border-gray-500 rounded-lg">
                 <div class="flex justify-between border-b border-gray-500 p-3">
                   <span>Subtotal</span>
-                  <span>S/. {{ subTotal }}</span>
+                  <span>S/. {{ cartSubtotal }}</span>
                 </div>
                 <div class="flex justify-between border-b border-gray-500 p-3">
                   <span>Envío</span>
@@ -70,11 +70,11 @@
                 </div>
                 <div class="flex justify-between p-3 font-bold">
                   <span>Total</span>
-                  <span>S/.{{ subTotal + 35 }} </span>
+                  <span>S/.{{ cartSubtotal + 35 }} </span>
                 </div>
               </div>
             </div>
-            <v-btn color="indigo" class="w-full">Checkout</v-btn>
+            <v-btn color="indigo" class="w-full" @click="onCheckout">Checkout</v-btn>
           </v-card-text>
         </v-card>
       </div>
@@ -83,40 +83,53 @@
 </template>
 <script>
 import store from "@/store";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import ImgComponentVue from '@/components/generales/ImgComponent.vue';
 
 export default {
   components: { ImgComponentVue },
   setup() {
     const dataTrolley = ref([]);
-    const quantity = ref(0);
-    const subTotal = ref(0);
 
-    const increment = () => {
-      quantity.value++;
-      subTotal.value = quantity.value * dataTrolley.value[0].product.Price;
-    }
+    const increment = (index) => {
+      dataTrolley.value[index].amount++;
+    };
 
-    const decrement = () => {
-      if (quantity.value > 0) {
-        quantity.value--;
-        subTotal.value = quantity.value * dataTrolley.value[0].product.Price;
+    const decrement = (index) => {
+      if (dataTrolley.value[index].amount > 0) {
+        dataTrolley.value[index].amount--;
       }
-    }
+    };
 
-    onMounted(() => {
-      dataTrolley.value = store.state.trolley;
-      quantity.value = dataTrolley.value[0].amount;
-      subTotal.value = quantity.value * dataTrolley.value[0].product.Price;
+    const removeItem = (index) => {
+      dataTrolley.value.splice(index, 1);
+      store.commit("setTrolley", dataTrolley.value);
+    };
+
+    const cartSubtotal = computed(() => {
+      return dataTrolley.value.reduce((total, item) => {
+        return total + (item.amount * item.product.Price);
+      }, 0);
     });
 
+    onMounted(() => {
+      dataTrolley.value = store.state.trolley.map(item => ({
+        ...item,
+        amount: item.amount || 1
+      }));
+    });
+
+    const onCheckout = () => {
+
+    }
+
     return {
+      onCheckout,
       dataTrolley,
       increment,
       decrement,
-      subTotal,
-      quantity
+      removeItem,
+      cartSubtotal
     };
   },
 };
