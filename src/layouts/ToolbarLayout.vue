@@ -43,7 +43,7 @@
           </div>
         </router-link>
         <template v-if="statusAuthenticated">
-          <span>Hola, {{ username }}</span>
+          <span>Hola, {{ usernameValue }}</span>
           <v-btn icon="mdi mdi-logout" color="white" @click="logout"></v-btn>
         </template>
         <template v-else>
@@ -79,6 +79,9 @@ export default {
     statusAuthenticated() {
       return this.$store.state.isAuthenticated;
     },
+    usernameValue() {
+      return this.$store.state.username;
+    },
   },
   data() {
     return {
@@ -87,7 +90,6 @@ export default {
   },
   setup() {
     const isAuthenticated = ref(store.state.isAuthenticated);
-    const username = ref(store.state.username);
 
     const logout = () => {
       store.commit("setIsAuthenticated", false);
@@ -96,7 +98,6 @@ export default {
     return {
       isAuthenticated,
       logout,
-      username,
     };
   },
 };

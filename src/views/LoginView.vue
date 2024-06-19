@@ -106,9 +106,8 @@ export default {
       };
       loginApi(data)
         .then((response) => {
+          console.log(response.data)
           dialogLoader.value = false;
-          console.log("---------------------------");
-          console.log(response.data);
           store.commit("setUsername", response.data.username);
           store.commit("setIsAuthenticated", true);
           router.push("/");
