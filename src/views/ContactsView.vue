@@ -2,19 +2,15 @@
   <div class="w-full flex justify-center py-10">
     <div class="w-[80%]">
       <div class="grid grid-cols-2">
-        <div>
-          <div class="product_box">
+        <div class="flex justify-center">
+          <div class="border border-gray-400 product_box w-[50%] p-5 rounded-lg h-[40%]">
+            <p class="font-bold">Lima - Villa el Salvador</p>
             <p>Calle 2 Mz CH Lt 8 Grupo 21A Sector 1</p>
-            <p>Lima - Villa el Salvador</p>
-            <p>Lunes a Sabado de 9:00 am a 8:00 pm</p>
-            <p>Ver Ubicación Google Maps</p>
-            <div class="pt-10">
-              <div class="flex gap-2">
-                <v-btn icon="mdi mdi-whatsapp" variant="text"></v-btn>
-                <v-btn icon="mdi mdi-facebook" variant="text"></v-btn>
-                <v-btn icon="mdi mdi-instagram" variant="text"></v-btn>
-              </div>
-            </div>
+            <p>Lunes a Domingo de 10:00 am a 10:00 pm</p>
+            <p class="text-blue-500 pt-5 cursor-pointer"
+              @click="redirectTo('https://www.google.com/maps/place/Villa+De+Salvador+Sector+I+Grupo+21,+Lima+15829/@-12.193054,-76.958205,16z/data=!4m6!3m5!1s0x9105b90cb8990479:0xf4297fbc9e7f4d58!8m2!3d-12.192944!4d-76.9574647!16s%2Fg%2F1tcxqr0s?hl=es&entry=ttu')">
+              Ver
+              Ubicación Google Maps</p>
           </div>
         </div>
         <div>
@@ -28,7 +24,17 @@
       </div>
     </div>
   </div>
+  <FooterLayout />
 </template>
 <script>
+import FooterLayout from "@/layouts/FooterLayout.vue";
 
+export default {
+  components: { FooterLayout },
+  methods: {
+    redirectTo(url) {
+      window.open(url, "_blank");
+    },
+  },
+};
 </script>

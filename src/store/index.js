@@ -1,13 +1,13 @@
 import { createStore } from "vuex";
 
 const localStorageKey =
-  "DJsdfg-2352LLDSF-dfglñdskfgiu38r_[22334ews34>YUVASZghsvdV--345";
+  "DJsdfg-2352LLDSF-dfgfgiu38r_[22334ews34>YUVASZghsvdV--345";
 
 export default createStore({
   state: {
     isAuthenticated: false,
     username: "",
-    token: "",
+    email: "",
     productDetail: {},
     trolley: [],
   },
@@ -17,12 +17,8 @@ export default createStore({
       state.isAuthenticated = value;
       localStorage.setItem(localStorageKey, JSON.stringify(state));
     },
-    setUsername(state, value) {
-      state.username = value;
-      localStorage.setItem(localStorageKey, JSON.stringify(state));
-    },
-    setToken(state, value) {
-      state.token = value;
+    setEmail(state, value) {
+      state.email = value;
       localStorage.setItem(localStorageKey, JSON.stringify(state));
     },
     setProductDetail(state, value) {

@@ -57,7 +57,7 @@
         </v-btn>
 
         <v-card-text class="text-center">
-          <span class="text-brown text-decoration-none" @click="selectTypeForm('LOGIN')">
+          <span class="text-brown text-decoration-none cursor-pointer" @click="selectTypeForm('LOGIN')">
             <v-icon icon="mdi-chevron-left"></v-icon> Login
           </span>
         </v-card-text>
@@ -108,6 +108,7 @@ export default {
         .then((response) => {
           console.log(response.data)
           dialogLoader.value = false;
+          store.commit("setEmail", response.data.email);
           store.commit("setUsername", response.data.username);
           store.commit("setIsAuthenticated", true);
           router.push("/");

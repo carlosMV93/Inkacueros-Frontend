@@ -86,6 +86,7 @@ import { useRouter } from "vue-router";
 import store from "@/store";
 import { onMounted, ref, computed } from "vue";
 import ImgComponentVue from '@/components/generales/ImgComponent.vue';
+import { basicAlert } from "@/helpers/SweetAlert";
 
 export default {
   components: { ImgComponentVue },
@@ -122,7 +123,28 @@ export default {
     });
 
     const onCheckout = () => {
-      router.push("/checkout");
+      if (dataTrolley.value.length > 0) {
+        if (store.state.isAuthenticated) {
+          store.commit("setTrolley", dataTrolley.value);
+          router.push("/checkout");
+        } else {
+          basicAlert(
+            () => {
+              router.push("/login");
+            },
+            "warning",
+            "Advertencia",
+            "Debe ingresar a su cuenta para realizar el checkout"
+          );
+        }
+      } else {
+        basicAlert(
+          () => { },
+          "warning",
+          "Advertencia",
+          "Debe seleccionar tener al menos 1 producto en el carrito"
+        );
+      }
     }
 
     return {

@@ -1,8 +1,9 @@
 <template>
   <div class="p-10">
-    <div class="w-full grid grid-cols-4">
+    <div class="w-full grid grid-cols-4 pb-5">
       <div class="col-span-1 p-4">
-        <v-text-field placeholder="Buscar producto" variant="outlined" density="compact" color="indigo"></v-text-field>
+        <v-text-field placeholder="Buscar producto" variant="outlined" density="compact" color="indigo"
+          v-model="searchQuery"></v-text-field>
         <v-card class="mx-auto shadow-lg w-full">
           <v-card-text>
             <div>Orden</div>
@@ -37,6 +38,7 @@
       </div>
     </div>
   </div>
+  <FooterLayout />
   <v-dialog v-model="dialogLoader" :scrim="false" persistent width="auto">
     <v-card color="brown-darken-1">
       <v-card-text>
@@ -46,7 +48,6 @@
     </v-card>
   </v-dialog>
 </template>
-
 <script>
 import { findAllBrandsApi } from "@/api/BrandService";
 import { findAllProductsApi } from "@/api/ProductsService";
@@ -56,9 +57,10 @@ import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import store from "@/store";
 import Swal from "sweetalert2";
+import FooterLayout from "@/layouts/FooterLayout.vue";
 
 export default {
-  components: { CardProduct },
+  components: { CardProduct, FooterLayout },
   setup() {
     const dataBrand = ref([]);
     const dataTypes = ref([]);
@@ -67,6 +69,7 @@ export default {
     const orderSelect = ref("1");
     const brandSelect = ref(0);
     const typeSelect = ref(0);
+    const searchQuery = ref(""); // Nueva variable de estado para la búsqueda
     const router = useRouter();
 
     onMounted(async () => {
@@ -104,6 +107,13 @@ export default {
         );
       }
 
+      // Filtrar por nombre de producto
+      if (searchQuery.value.trim() !== "") {
+        products = products.filter((product) =>
+          product.Name.toLowerCase().includes(searchQuery.value.toLowerCase())
+        );
+      }
+
       // Ordenar productos
       if (orderSelect.value == "1") {
         products.sort((a, b) => a.Name.localeCompare(b.Name));
@@ -135,7 +145,7 @@ export default {
           container: "swal-bottom-end",
         },
       });
-    }
+    };
 
     return {
       goDetailProduct,
@@ -148,6 +158,7 @@ export default {
       dialogLoader,
       dataBrand,
       dataTypes,
+      searchQuery, // Añadir al return
     };
   },
 };

@@ -23,7 +23,7 @@
     <v-card-actions class="mt-auto">
       <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="addTrolley(product)">Agregar al
         carrito</v-btn>
-      <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="goDetailProduct(product)">Ver más</v-btn>
+      <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="goDetailProduct(product)">Ver producto</v-btn>
     </v-card-actions>
   </v-card>
 </template>
