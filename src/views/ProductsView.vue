@@ -2,12 +2,7 @@
   <div class="p-10">
     <div class="w-full grid grid-cols-4">
       <div class="col-span-1 p-4">
-        <v-text-field
-          placeholder="Buscar producto"
-          variant="outlined"
-          density="compact"
-          color="indigo"
-        ></v-text-field>
+        <v-text-field placeholder="Buscar producto" variant="outlined" density="compact" color="indigo"></v-text-field>
         <v-card class="mx-auto shadow-lg w-full">
           <v-card-text>
             <div>Orden</div>
@@ -22,12 +17,7 @@
             <div>Categoria</div>
             <v-radio-group v-model="typeSelect" color="indigo">
               <v-radio label="Todos" value="0"></v-radio>
-              <v-radio
-                :label="type.Name"
-                :value="type.id"
-                v-for="type in dataTypes"
-                :key="type.id"
-              ></v-radio>
+              <v-radio :label="type.Name" :value="type.id" v-for="type in dataTypes" :key="type.id"></v-radio>
             </v-radio-group>
           </v-card-text>
         </v-card>
@@ -36,23 +26,14 @@
             <div>Marca</div>
             <v-radio-group v-model="brandSelect" color="indigo">
               <v-radio label="Todos" value="0"></v-radio>
-              <v-radio
-                :label="brand.Name"
-                :value="brand.id"
-                v-for="brand in dataBrand"
-                :key="brand.id"
-              ></v-radio>
+              <v-radio :label="brand.Name" :value="brand.id" v-for="brand in dataBrand" :key="brand.id"></v-radio>
             </v-radio-group>
           </v-card-text>
         </v-card>
       </div>
       <div class="col-span-3 container_cards_products auto-rows-min">
-        <CardProduct
-          :product="product"
-          v-for="product in sortedProducts"
-          :key="product.id"
-          @go-detail="goDetailProduct"
-        />
+        <CardProduct :product="product" v-for="product in sortedProducts" :key="product.id" @go-detail="goDetailProduct"
+          @add-trolley="addTrolley" />
       </div>
     </div>
   </div>
@@ -60,11 +41,7 @@
     <v-card color="brown-darken-1">
       <v-card-text>
         Procesando...
-        <v-progress-linear
-          indeterminate
-          color="white"
-          class="mb-0"
-        ></v-progress-linear>
+        <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -78,6 +55,7 @@ import CardProduct from "@/components/products/CardProducts.vue";
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import store from "@/store";
+import Swal from "sweetalert2";
 
 export default {
   components: { CardProduct },
@@ -142,8 +120,26 @@ export default {
       router.push(`detail_product/${data.product.id}`);
     };
 
+    const addTrolley = (data) => {
+      const dataTrolley = store.state.trolley;
+      dataTrolley.push({ product: data.product, amount: 1 });
+      store.commit("setTrolley", dataTrolley);
+      Swal.fire({
+        icon: "success",
+        text: "Se ha agregado el producto correctamente",
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 5000,
+        toast: true,
+        customClass: {
+          container: "swal-bottom-end",
+        },
+      });
+    }
+
     return {
       goDetailProduct,
+      addTrolley,
       sortedProducts,
       orderSelect,
       brandSelect,

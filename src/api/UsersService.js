@@ -9,3 +9,7 @@ export function createUserApi(data) {
 export function loginApi(data) {
   return axios.post(`${baseURL}/validate_user`, data);
 }
+
+export function forgetPasswordApi(data) {
+  return axios.post(`${baseURL}/change-password`, data);
+}

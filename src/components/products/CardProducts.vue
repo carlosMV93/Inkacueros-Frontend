@@ -21,16 +21,9 @@
     </v-card-text>
 
     <v-card-actions class="mt-auto">
-      <v-btn color="deep-purple-accent-4" variant="tonal" size="small"
-        >Agregar al carrito</v-btn
-      >
-      <v-btn
-        color="deep-purple-accent-4"
-        variant="tonal"
-        size="small"
-        @click="goDetailProduct(product)"
-        >Ver más</v-btn
-      >
+      <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="addTrolley(product)">Agregar al
+        carrito</v-btn>
+      <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="goDetailProduct(product)">Ver más</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -44,7 +37,7 @@ export default {
   props: {
     product: Object,
   },
-  emits: ["go-detail"],
+  emits: ["go-detail", "add-trolley"],
   setup(_, { emit }) {
     const goDetailProduct = (product) => {
       emit("go-detail", {
@@ -52,8 +45,15 @@ export default {
       });
     };
 
+    const addTrolley = (product) => {
+      emit("add-trolley", {
+        product,
+      });
+    }
+
     return {
       goDetailProduct,
+      addTrolley,
     };
   },
   data() {

@@ -36,15 +36,6 @@
           class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
         >
           Contraseña
-
-          <a
-            class="text-caption text-decoration-none text-brown"
-            href="#"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Olvidaste tu contraseña?</a
-          >
         </div>
 
         <v-text-field

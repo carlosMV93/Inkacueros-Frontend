@@ -115,9 +115,6 @@ export default {
     const addTrolley = () => {
       if (amount.value != 0 && amount.value != "0") {
         const dataTrolley = store.state.trolley;
-        console.log("--------------------------------");
-        console.log(dataTrolley);
-        console.log("--------------------------------");
         dataTrolley.push({ product: product.value, amount: amount.value });
         console.log(dataTrolley);
         store.commit("setTrolley", dataTrolley);
