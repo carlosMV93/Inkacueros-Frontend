@@ -18,24 +18,18 @@
         </div>
         <div class="col-span-3">
           <p class="text-3xl font-bold pt-2 pb-4">{{ product.Name }}</p>
-          <div
-            class="py-5 flex justify-between gap-4 border-t-2 border-b-2 border-collapse"
-          >
+          <div class="py-5 flex justify-between gap-4 border-t-2 border-b-2 border-collapse">
             <div class="font-bold">Descripción:</div>
             <div>
               {{ product.Description }}
             </div>
           </div>
-          <div
-            class="py-5 flex justify-between gap-4 border-b-2 border-collapse"
-          >
+          <div class="py-5 flex justify-between gap-4 border-b-2 border-collapse">
             <p class="text-lg pt-4" v-if="product.IdBrand">
               Marca: {{ product.IdBrand.Name }}
             </p>
           </div>
-          <div
-            class="py-5 flex justify-between gap-4 border-b-2 border-collapse"
-          >
+          <div class="py-5 flex justify-between gap-4 border-b-2 border-collapse">
             <p class="text-lg pt-4" v-if="product.IdType">
               Categoria: {{ product.IdType.Name }}
             </p>
@@ -45,20 +39,11 @@
           </p>
           <div class="pt-5 flex items-center gap-4">
             <div>
-              <v-text-field
-                placeholder="Cantidad"
-                variant="outlined"
-                density="compact"
-                color="indigo"
-                type="number"
-                hide-details
-                v-model="amount"
-              ></v-text-field>
+              <v-text-field placeholder="Cantidad" variant="outlined" density="compact" color="indigo" type="number"
+                hide-details v-model="amount"></v-text-field>
             </div>
             <div>
-              <v-btn color="indigo" @click="addTrolley"
-                >Agregar al carrito</v-btn
-              >
+              <v-btn color="indigo" @click="addTrolley">Agregar al carrito</v-btn>
             </div>
           </div>
         </div>
@@ -70,11 +55,7 @@
     <v-card color="brown-darken-1">
       <v-card-text>
         Procesando...
-        <v-progress-linear
-          indeterminate
-          color="white"
-          class="mb-0"
-        ></v-progress-linear>
+        <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -114,8 +95,19 @@ export default {
 
     const addTrolley = () => {
       if (amount.value != 0 && amount.value != "0") {
-        const dataTrolley = store.state.trolley;
-        dataTrolley.push({ product: product.value, amount: amount.value });
+        let dataTrolley = store.state.trolley;
+        const productExisting = dataTrolley.find(item => item.product.id == product.value.id)
+
+        if (productExisting) {
+          dataTrolley = dataTrolley.map(item => {
+            if (item.product.id == product.value.id) {
+              return { product: item.product, amount: item.amount + parseInt(amount.value, 10) };
+            }
+            return item;
+          });
+        } else {
+          dataTrolley.push({ product: product.value, amount: parseInt(amount.value, 10) });
+        }
         console.log(dataTrolley);
         store.commit("setTrolley", dataTrolley);
         Swal.fire({
@@ -131,7 +123,7 @@ export default {
         });
       } else {
         basicAlert(
-          () => {},
+          () => { },
           "warning",
           "Advertencia",
           "Seleccione una cantidad mayor a 0 del producto"

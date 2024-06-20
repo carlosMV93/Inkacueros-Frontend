@@ -7,7 +7,9 @@ export default createStore({
   state: {
     isAuthenticated: false,
     username: "",
+    userId: "",
     email: "",
+    role: "",
     productDetail: {},
     trolley: [],
   },
@@ -15,6 +17,14 @@ export default createStore({
   mutations: {
     setIsAuthenticated(state, value) {
       state.isAuthenticated = value;
+      localStorage.setItem(localStorageKey, JSON.stringify(state));
+    },
+    setUsername(state, value) {
+      state.username = value;
+      localStorage.setItem(localStorageKey, JSON.stringify(state));
+    },
+    setUserId(state, value) {
+      state.userId = value;
       localStorage.setItem(localStorageKey, JSON.stringify(state));
     },
     setEmail(state, value) {
@@ -27,6 +37,10 @@ export default createStore({
     },
     setTrolley(state, value) {
       state.trolley = value;
+      localStorage.setItem(localStorageKey, JSON.stringify(state));
+    },
+    setRole(state, value) {
+      state.role = value;
       localStorage.setItem(localStorageKey, JSON.stringify(state));
     },
     // Agregar una mutación para inicializar el estado desde localStorage al cargar la página

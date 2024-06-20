@@ -188,13 +188,15 @@ export default ({
             console.log(createOrderResponse.data.id);
             for (const item of dataTrolley.value) {
                 const dataOrder = {
-                    Name: "35",
+                    Name:  item.product.Name,
                     Description: "in stock",
                     Price: item.product.Price,
                     PictureUrl: item.product.PictureUrl,
                     IdProduct: item.product.id,
+                    IdUser: parseInt(store.state.userId, 10),
                     IdOrder: createOrderResponse.data.id,
-                    Email: store.state.email
+                    Email: store.state.email,
+                    Cantidad: item.amount
                 };
                 await createOrderItemApi(dataOrder);
             }

@@ -6,23 +6,17 @@
       </div>
       <div class="flex gap-4 items-center list-none">
         <router-link to="/" class="item-nav" href="/">
-          <li
-            class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer"
-          >
+          <li class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer">
             Inicio
           </li>
         </router-link>
         <router-link to="/products" class="item-nav" href="/products">
-          <li
-            class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer"
-          >
+          <li class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer">
             Productos
           </li>
         </router-link>
         <router-link to="/contacts" class="item-nav" href="/contacts">
-          <li
-            class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer"
-          >
+          <li class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer">
             Contactanos
           </li>
         </router-link>
@@ -34,9 +28,7 @@
               <v-icon>mdi-cart</v-icon>
             </v-btn>
             <div v-if="cartItemCount > 0" class="absolute top-0 right-0">
-              <p
-                class="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
-              >
+              <p class="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
                 {{ cartItemCount }}
               </p>
             </div>
@@ -44,20 +36,17 @@
         </router-link>
         <template v-if="statusAuthenticated">
           <span>Hola, {{ usernameValue }}</span>
-          <v-btn icon="mdi mdi-logout" color="white" @click="logout"></v-btn>
+          <MenuAsPopoverVue :username="usernameValue" :rol="roleUser"
+            :avatarPath="avatarImage" />
         </template>
         <template v-else>
           <router-link to="/login" class="item-nav" href="/login">
-            <li
-              class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer"
-            >
+            <li class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer">
               Login
             </li>
           </router-link>
           <router-link to="/register" class="item-nav" href="/register">
-            <li
-              class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer"
-            >
+            <li class="border-b-2 border-transparent hover:border-b-2 hover:border-white cursor-pointer">
               Registro
             </li>
           </router-link>
@@ -69,15 +58,21 @@
 <script>
 import store from "@/store";
 import logoInkacueros from "@/assets/logoInkakueros.png";
+import avatarImage from "@/assets/iconuser_hombre.png";
 import { ref } from "vue";
+import MenuAsPopoverVue from '@/components/generales/MenuAsPopover.vue';
 
 export default {
+  components: { MenuAsPopoverVue },
   computed: {
     cartItemCount() {
       return this.$store.state.trolley.length;
     },
     statusAuthenticated() {
       return this.$store.state.isAuthenticated;
+    },
+    roleUser() {
+      return this.$store.state.role == "ADMIN" ? "Administrador": "Cliente";
     },
     usernameValue() {
       return this.$store.state.username;
@@ -86,19 +81,13 @@ export default {
   data() {
     return {
       logoInkacueros,
+      avatarImage
     };
   },
   setup() {
     const isAuthenticated = ref(store.state.isAuthenticated);
-
-    const logout = () => {
-      store.commit("setTrolley", []);
-      store.commit("setIsAuthenticated", false);
-    };
-
     return {
       isAuthenticated,
-      logout,
     };
   },
 };

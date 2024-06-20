@@ -12,9 +12,6 @@
 
         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
           Contraseña
-
-          <span class="text-caption text-decoration-none text-brown cursor-pointer" @click="selectTypeForm('FORGET')">
-            Olvidaste tu contraseña?</span>
         </div>
 
         <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'" :type="visible ? 'text' : 'password'"
@@ -110,6 +107,8 @@ export default {
           dialogLoader.value = false;
           store.commit("setEmail", response.data.email);
           store.commit("setUsername", response.data.username);
+          store.commit("setUserId", response.data.idUser);
+          store.commit("setRole", response.data.admin ? "ADMIN" : "CLIENT");
           store.commit("setIsAuthenticated", true);
           router.push("/");
         })

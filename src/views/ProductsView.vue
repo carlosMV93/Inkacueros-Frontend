@@ -131,8 +131,20 @@ export default {
     };
 
     const addTrolley = (data) => {
-      const dataTrolley = store.state.trolley;
-      dataTrolley.push({ product: data.product, amount: 1 });
+      let dataTrolley = store.state.trolley;
+      const productExisting = dataTrolley.find(item => item.product.id == data.product.id)
+
+      if (productExisting) {
+        dataTrolley = dataTrolley.map(item => {
+          if (item.product.id == data.product.id) {
+            return { product: item.product, amount: item.amount + parseInt(1, 10) };
+          }
+          return item;
+        });
+      } else {
+        dataTrolley.push({ product: data.product, amount: parseInt(1, 10) });
+      }
+
       store.commit("setTrolley", dataTrolley);
       Swal.fire({
         icon: "success",
