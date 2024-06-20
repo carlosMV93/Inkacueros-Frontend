@@ -1,30 +1,64 @@
 <template>
   <div class="w-full h-full flex justify-center items-center">
     <div class="pb-10" v-if="typeForm == 'LOGIN'">
-      <v-card class="mx-auto pa-12 pb-8" elevation="8" min-width="448" max-width="600" rounded="lg">
+      <v-card
+        class="mx-auto pa-12 pb-8"
+        elevation="8"
+        min-width="448"
+        max-width="600"
+        rounded="lg"
+      >
         <div class="flex justify-center">
           <v-btn icon="mdi mdi-lock" variant="tonal" color="indigo"></v-btn>
         </div>
         <div class="text-subtitle-1 text-medium-emphasis">Usuario</div>
 
-        <v-text-field density="compact" placeholder="Ingrese su usuario" prepend-inner-icon="mdi-account"
-          variant="outlined" color="brown-darken-1" v-model="username"></v-text-field>
+        <v-text-field
+          density="compact"
+          placeholder="Ingrese su usuario"
+          prepend-inner-icon="mdi-account"
+          variant="outlined"
+          color="brown-darken-1"
+          v-model="username"
+        ></v-text-field>
 
-        <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+        <div
+          class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+        >
           Contraseña
         </div>
 
-        <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'" :type="visible ? 'text' : 'password'"
-          density="compact" placeholder="Ingrese su contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined"
-          color="brown-darken-1" v-model="password" @click:append-inner="visible = !visible"></v-text-field>
+        <v-text-field
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+          density="compact"
+          placeholder="Ingrese su contraseña"
+          prepend-inner-icon="mdi-lock-outline"
+          variant="outlined"
+          color="brown-darken-1"
+          v-model="password"
+          @click:append-inner="visible = !visible"
+        ></v-text-field>
 
-        <v-btn class="mb-8" color="brown-darken-1" size="large" variant="tonal" block @click="validateCredentials">
+        <v-btn
+          class="mb-8"
+          color="brown-darken-1"
+          size="large"
+          variant="tonal"
+          block
+          @click="validateCredentials"
+        >
           Ingresar
         </v-btn>
 
         <v-card-text class="text-center">
           <router-link to="/register" class="item-nav" href="/register">
-            <a class="text-brown text-decoration-none" href="#" rel="noopener noreferrer" target="_blank">
+            <a
+              class="text-brown text-decoration-none"
+              href="#"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               Registrarse <v-icon icon="mdi-chevron-right"></v-icon>
             </a>
           </router-link>
@@ -32,29 +66,65 @@
       </v-card>
     </div>
     <div class="pb-10" v-else-if="typeForm == 'FORGET'">
-      <v-card class="mx-auto pa-12 pb-8" elevation="8" min-width="448" max-width="600" rounded="lg">
+      <v-card
+        class="mx-auto pa-12 pb-8"
+        elevation="8"
+        min-width="448"
+        max-width="600"
+        rounded="lg"
+      >
         <div class="flex justify-center">
-          <v-btn icon="mdi mdi-key-change" variant="tonal" color="indigo"></v-btn>
+          <v-btn
+            icon="mdi mdi-key-change"
+            variant="tonal"
+            color="indigo"
+          ></v-btn>
         </div>
         <div class="text-subtitle-1 text-medium-emphasis">Usuario</div>
 
-        <v-text-field density="compact" placeholder="Ingrese su usuario" prepend-inner-icon="mdi-account"
-          variant="outlined" color="brown-darken-1" v-model="forgetusername"></v-text-field>
+        <v-text-field
+          density="compact"
+          placeholder="Ingrese su usuario"
+          prepend-inner-icon="mdi-account"
+          variant="outlined"
+          color="brown-darken-1"
+          v-model="forgetusername"
+        ></v-text-field>
 
-        <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+        <div
+          class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+        >
           Nueva Contraseña
         </div>
 
-        <v-text-field :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'" :type="visible ? 'text' : 'password'"
-          density="compact" placeholder="Ingrese su contraseña" prepend-inner-icon="mdi-lock-outline" variant="outlined"
-          color="brown-darken-1" v-model="forgetpassword" @click:append-inner="visible = !visible"></v-text-field>
+        <v-text-field
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+          density="compact"
+          placeholder="Ingrese su contraseña"
+          prepend-inner-icon="mdi-lock-outline"
+          variant="outlined"
+          color="brown-darken-1"
+          v-model="forgetpassword"
+          @click:append-inner="visible = !visible"
+        ></v-text-field>
 
-        <v-btn class="mb-8" color="brown-darken-1" size="large" variant="tonal" block @click="changePassword">
+        <v-btn
+          class="mb-8"
+          color="brown-darken-1"
+          size="large"
+          variant="tonal"
+          block
+          @click="changePassword"
+        >
           Cambiar contraseña
         </v-btn>
 
         <v-card-text class="text-center">
-          <span class="text-brown text-decoration-none cursor-pointer" @click="selectTypeForm('LOGIN')">
+          <span
+            class="text-brown text-decoration-none cursor-pointer"
+            @click="selectTypeForm('LOGIN')"
+          >
             <v-icon icon="mdi-chevron-left"></v-icon> Login
           </span>
         </v-card-text>
@@ -65,7 +135,11 @@
     <v-card color="brown-darken-1">
       <v-card-text>
         Procesando...
-        <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        <v-progress-linear
+          indeterminate
+          color="white"
+          class="mb-0"
+        ></v-progress-linear>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -103,7 +177,7 @@ export default {
       };
       loginApi(data)
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           dialogLoader.value = false;
           store.commit("setEmail", response.data.email);
           store.commit("setUsername", response.data.username);
@@ -122,13 +196,15 @@ export default {
       dialogLoader.value = true;
       const data = {
         username: forgetusername.value,
-        new_password: forgetpassword.value
-      }
+        new_password: forgetpassword.value,
+      };
       forgetPasswordApi(data)
         .then(() => {
           dialogLoader.value = false;
           basicAlert(
-            () => { typeForm.value = "LOGIN" },
+            () => {
+              typeForm.value = "LOGIN";
+            },
             "success",
             "Logrado",
             "Se ha cambiado correctamente la contraseña"
@@ -138,7 +214,7 @@ export default {
           dialogLoader.value = false;
           validateError(error.response);
         });
-    }
+    };
 
     return {
       validateCredentials,

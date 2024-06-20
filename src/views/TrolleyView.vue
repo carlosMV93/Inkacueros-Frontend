@@ -25,30 +25,65 @@
               <td>{{ item.product.Price }}</td>
               <td>
                 <div class="relative flex items-center max-w-[8rem]">
-                  <button type="button" @click="decrement(index)"
-                    class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-l-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
-                    <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                      viewBox="0 0 18 2">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 1h16" />
+                  <button
+                    type="button"
+                    @click="decrement(index)"
+                    class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-l-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none"
+                  >
+                    <svg
+                      class="w-3 h-3 text-gray-900"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 18 2"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 1h16"
+                      />
                     </svg>
                   </button>
-                  <input type="text" v-model="item.amount"
+                  <input
+                    type="text"
+                    v-model="item.amount"
                     class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5"
-                    required />
-                  <button type="button" @click="increment(index)"
-                    class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-r-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
-                    <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                      viewBox="0 0 18 18">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 1v16M1 9h16" />
+                    required
+                  />
+                  <button
+                    type="button"
+                    @click="increment(index)"
+                    class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-r-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none"
+                  >
+                    <svg
+                      class="w-3 h-3 text-gray-900"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 18 18"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 1v16M1 9h16"
+                      />
                     </svg>
                   </button>
                 </div>
               </td>
               <td>{{ item.amount * item.product.Price }}</td>
               <td>
-                <v-btn icon="mdi-delete" variant="tonal" size="small" color="red" @click="removeItem(index)"></v-btn>
+                <v-btn
+                  icon="mdi-delete"
+                  variant="tonal"
+                  size="small"
+                  color="red"
+                  @click="removeItem(index)"
+                ></v-btn>
               </td>
             </tr>
           </tbody>
@@ -74,7 +109,9 @@
                 </div>
               </div>
             </div>
-            <v-btn color="indigo" class="w-full" @click="onCheckout">Checkout</v-btn>
+            <v-btn color="indigo" class="w-full" @click="onCheckout"
+              >Checkout</v-btn
+            >
           </v-card-text>
         </v-card>
       </div>
@@ -85,7 +122,7 @@
 import { useRouter } from "vue-router";
 import store from "@/store";
 import { onMounted, ref, computed } from "vue";
-import ImgComponentVue from '@/components/generales/ImgComponent.vue';
+import ImgComponentVue from "@/components/generales/ImgComponent.vue";
 import { basicAlert } from "@/helpers/SweetAlert";
 
 export default {
@@ -99,7 +136,7 @@ export default {
     };
 
     const decrement = (index) => {
-      if (dataTrolley.value[index].amount > 0) {
+      if (dataTrolley.value[index].amount > 1) {
         dataTrolley.value[index].amount--;
       }
     };
@@ -111,14 +148,14 @@ export default {
 
     const cartSubtotal = computed(() => {
       return dataTrolley.value.reduce((total, item) => {
-        return total + (item.amount * item.product.Price);
+        return total + item.amount * item.product.Price;
       }, 0);
     });
 
     onMounted(() => {
-      dataTrolley.value = store.state.trolley.map(item => ({
+      dataTrolley.value = store.state.trolley.map((item) => ({
         ...item,
-        amount: item.amount || 1
+        amount: item.amount || 1,
       }));
     });
 
@@ -139,13 +176,13 @@ export default {
         }
       } else {
         basicAlert(
-          () => { },
+          () => {},
           "warning",
           "Advertencia",
           "Debe seleccionar tener al menos 1 producto en el carrito"
         );
       }
-    }
+    };
 
     return {
       onCheckout,
@@ -153,7 +190,7 @@ export default {
       increment,
       decrement,
       removeItem,
-      cartSubtotal
+      cartSubtotal,
     };
   },
 };

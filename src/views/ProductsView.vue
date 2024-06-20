@@ -1,9 +1,14 @@
 <template>
   <div class="p-10">
-    <div class="w-full grid grid-cols-4 pb-5">
+    <div class="w-full grid grid-cols-5 pb-5">
       <div class="col-span-1 p-4">
-        <v-text-field placeholder="Buscar producto" variant="outlined" density="compact" color="indigo"
-          v-model="searchQuery"></v-text-field>
+        <v-text-field
+          placeholder="Buscar producto"
+          variant="outlined"
+          density="compact"
+          color="indigo"
+          v-model="searchQuery"
+        ></v-text-field>
         <v-card class="mx-auto shadow-lg w-full">
           <v-card-text>
             <div>Orden</div>
@@ -18,7 +23,12 @@
             <div>Categoria</div>
             <v-radio-group v-model="typeSelect" color="indigo">
               <v-radio label="Todos" value="0"></v-radio>
-              <v-radio :label="type.Name" :value="type.id" v-for="type in dataTypes" :key="type.id"></v-radio>
+              <v-radio
+                :label="type.Name"
+                :value="type.id"
+                v-for="type in dataTypes"
+                :key="type.id"
+              ></v-radio>
             </v-radio-group>
           </v-card-text>
         </v-card>
@@ -27,14 +37,24 @@
             <div>Marca</div>
             <v-radio-group v-model="brandSelect" color="indigo">
               <v-radio label="Todos" value="0"></v-radio>
-              <v-radio :label="brand.Name" :value="brand.id" v-for="brand in dataBrand" :key="brand.id"></v-radio>
+              <v-radio
+                :label="brand.Name"
+                :value="brand.id"
+                v-for="brand in dataBrand"
+                :key="brand.id"
+              ></v-radio>
             </v-radio-group>
           </v-card-text>
         </v-card>
       </div>
-      <div class="col-span-3 container_cards_products auto-rows-min">
-        <CardProduct :product="product" v-for="product in sortedProducts" :key="product.id" @go-detail="goDetailProduct"
-          @add-trolley="addTrolley" />
+      <div class="col-span-4 container_cards_products auto-rows-min">
+        <CardProduct
+          :product="product"
+          v-for="product in sortedProducts"
+          :key="product.id"
+          @go-detail="goDetailProduct"
+          @add-trolley="addTrolley"
+        />
       </div>
     </div>
   </div>
@@ -43,7 +63,11 @@
     <v-card color="brown-darken-1">
       <v-card-text>
         Procesando...
-        <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        <v-progress-linear
+          indeterminate
+          color="white"
+          class="mb-0"
+        ></v-progress-linear>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -132,12 +156,17 @@ export default {
 
     const addTrolley = (data) => {
       let dataTrolley = store.state.trolley;
-      const productExisting = dataTrolley.find(item => item.product.id == data.product.id)
+      const productExisting = dataTrolley.find(
+        (item) => item.product.id == data.product.id
+      );
 
       if (productExisting) {
-        dataTrolley = dataTrolley.map(item => {
+        dataTrolley = dataTrolley.map((item) => {
           if (item.product.id == data.product.id) {
-            return { product: item.product, amount: item.amount + parseInt(1, 10) };
+            return {
+              product: item.product,
+              amount: item.amount + parseInt(1, 10),
+            };
           }
           return item;
         });
