@@ -72,7 +72,7 @@
         <template v-if="statusAuthenticated">
           <div class="flex gap-2 items-center">
             <img :src="avatarImage" alt="" class="w-10 h-10" />
-            <span
+            <span class="text-sm"
               >Hola, {{ usernameValue }} <br />
               <span class="text-xs">{{ roleUser }} </span></span
             >
@@ -123,7 +123,7 @@ export default {
       return this.$store.state.role == "ADMIN" ? true : false;
     },
     roleUser() {
-      return this.$store.state.role == "ADMIN" ? "Administrador" : "Cliente";
+      return this.$store.state.role == "ADMIN" ? "Administrador" : "Usuario";
     },
     usernameValue() {
       return this.$store.state.username;

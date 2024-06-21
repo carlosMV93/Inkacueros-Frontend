@@ -7,7 +7,7 @@
             <div>
                 <div class="flex gap-3 items-center">
                     <v-btn icon="mdi mdi-map-marker" variant="text"></v-btn>
-                    <p>Calle 2 Mz CH Lt 8 Grupo 21A Sector 1 <br> Lima - Villa el Salvador</p>
+                    <p>Mz CH Lt 8 Grupo 21A Sector 1 <br> Lima - Villa el Salvador</p>
                 </div>
                 <div class="flex gap-3 pt-4 items-center">
                     <v-btn icon="mdi mdi-email" variant="text" @click="sendEmail"></v-btn>

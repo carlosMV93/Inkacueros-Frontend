@@ -2,7 +2,7 @@
     <div class="flex justify-center items-center p-10">
         <div class="w-[80%]">
             <v-card class="mx-auto shadow-lg w-full">
-                <h1 class="text-center font-bold text-3xl py-3 text-indigo-500">Checkout</h1>
+                <h1 class="text-center font-bold text-3xl py-3 text-indigo-600">Checkout</h1>
                 <v-timeline direction="horizontal" line-inset="12">
                     <v-timeline-item :dot-color="typeForm == 'DIRECTION' ? 'indigo' : 'grey'">
                         <template v-slot:opposite>
@@ -20,26 +20,28 @@
                     <p class="font-bold text-gray-500">Dirección de envio</p>
                     <div class="grid grid-cols-2 gap-5">
                         <div>
-                            <v-text-field label="Nombre" variant="underlined" color="indigo"
-                                v-model="name"></v-text-field>
+                            <v-text-field label="Nombre" variant="underlined" color="indigo" v-model="name"
+                                @input="validateText('name')"></v-text-field>
                         </div>
                         <div>
-                            <v-text-field label="Apellidos" variant="underlined" color="indigo"
-                                v-model="lastName"></v-text-field>
+                            <v-text-field label="Apellidos" variant="underlined" color="indigo" v-model="lastName"
+                                @input="validateText('lastName')"></v-text-field>
                         </div>
                     </div>
-                    <v-text-field label="Dirección Linea 1" variant="underlined" color="indigo"
-                        v-model="address1"></v-text-field>
-                    <v-text-field label="Dirección Linea 2" variant="underlined" color="indigo"
-                        v-model="address2"></v-text-field>
+                    <div class="grid grid-cols-2 gap-5">
+                        <v-text-field label="Dirección" variant="underlined" color="indigo"
+                            v-model="address1"></v-text-field>
+                        <v-text-field label="DNI/RUC" variant="underlined" color="indigo" v-model="dni"
+                            type="number"></v-text-field>
+                    </div>
                     <div class="grid grid-cols-2 gap-5">
                         <div>
-                            <v-text-field label="Ciudad" variant="underlined" color="indigo"
-                                v-model="city"></v-text-field>
+                            <v-text-field label="Ciudad" variant="underlined" color="indigo" v-model="city"
+                                @input="validateText('city')"></v-text-field>
                         </div>
                         <div>
-                            <v-text-field label="Provincia" variant="underlined" color="indigo"
-                                v-model="state"></v-text-field>
+                            <v-text-field label="Provincia" variant="underlined" color="indigo" v-model="state"
+                                @input="validateText('state')"></v-text-field>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-5">
@@ -48,8 +50,8 @@
                                 v-model="zipcode"></v-text-field>
                         </div>
                         <div>
-                            <v-text-field label="País" variant="underlined" color="indigo"
-                                v-model="country"></v-text-field>
+                            <v-text-field label="País" variant="underlined" color="indigo" v-model="country"
+                                @input="validateText('country')"></v-text-field>
                         </div>
                     </div>
                     <div class="flex justify-end">
@@ -83,18 +85,14 @@
                     <div class="flex justify-end w-full">
                         <div class="w-[15rem]">
                             <div class="pt-3 pb-3">
-                                <div class="flex flex-col border border-gray-400 rounded-sm">
+                                <div class="flex flex-col border border-gray-400 rounded-lg">
                                     <div class="flex justify-between border-b border-gray-400 p-3">
                                         <span>Subtotal</span>
                                         <span>S/. {{ cartSubtotal }}</span>
                                     </div>
-                                    <div class="flex justify-between border-b border-gray-500 p-3">
-                                        <span>Envío</span>
-                                        <span>S/. 35</span>
-                                    </div>
                                     <div class="flex justify-between p-3 font-bold text-gray-500">
                                         <span>Total</span>
-                                        <span>S/.{{ cartSubtotal + 35 }} </span>
+                                        <span>S/.{{ cartSubtotal }} </span>
                                     </div>
                                 </div>
                             </div>
@@ -124,10 +122,21 @@ import { computed, onMounted, ref } from 'vue';
 import { useRouter } from "vue-router";
 import store from "@/store";
 import { basicAlert } from '@/helpers/SweetAlert';
-import { createOrderApi, createOrderItemApi } from '@/api/OrderService';
+import { createOrderApi, createProductOrderApi, createOrdersItemApi } from '@/api/OrderService';
+import { validateError } from '@/helpers/Validators';
 
 export default ({
     components: { ImgComponentVue },
+    methods: {
+        validateText(field) {
+            // Expresión regular que permite letras, espacios y caracteres acentuados
+            const regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/;
+            // Filtrar el valor del campo basado en la expresión regular
+            if (!regex.test(this[field])) {
+                this[field] = this[field].replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '');
+            }
+        },
+    },
     setup() {
         const router = useRouter();
         const typeForm = ref("DIRECTION");
@@ -135,8 +144,8 @@ export default ({
         const name = ref("");
         const lastName = ref("");
         const address1 = ref("");
-        const address2 = ref("");
         const city = ref("");
+        const dni = ref("");
         const country = ref("");
         const state = ref("");
         const zipcode = ref("");
@@ -156,7 +165,7 @@ export default ({
         });
 
         const nextStage = () => {
-            if (name.value != "" && lastName.value != "" && address1.value != "" && address2.value != "" && city.value != "" && country.value != "" && state.value != "" && zipcode.value != "") {
+            if (name.value != "" && lastName.value != "" && address1.value != "" && city.value != "" && country.value != "" && state.value != "" && zipcode.value != "" && dni.value != "") {
                 typeForm.value = "CONFIRM";
             } else {
                 basicAlert(
@@ -169,48 +178,58 @@ export default ({
         }
 
         const endOrder = async () => {
-            dialogLoader.value = true;
-            const data = {
-                Delivery_Fee: "35",
-                Order_Status: "in stock",
-                address1: address1.value,
-                address2: address2.value,
-                City: city.value,
-                Country: country.value,
-                Name: name.value + " " + lastName.value,
-                State: state.value,
-                Zipcode: zipcode.value,
-                Sub_Total: dataTrolley.value.reduce((total, item) => {
-                    return total + (item.amount * item.product.Price);
-                }, 0),
-            }
-            const createOrderResponse = await createOrderApi(data);
-            console.log(createOrderResponse.data.id);
-            for (const item of dataTrolley.value) {
-                const dataOrder = {
-                    Name:  item.product.Name,
-                    Description: "in stock",
-                    Price: item.product.Price,
-                    PictureUrl: item.product.PictureUrl,
-                    IdProduct: item.product.id,
-                    IdUser: parseInt(store.state.userId, 10),
-                    IdOrder: createOrderResponse.data.id,
-                    Email: store.state.email,
-                    Cantidad: item.amount
-                };
-                await createOrderItemApi(dataOrder);
-            }
+            try {
+                dialogLoader.value = true;
+                const data = {
+                    Delivery_Fee: "35",
+                    Order_Status: "in stock",
+                    address1: address1.value,
+                    City: city.value,
+                    Country: country.value,
+                    Name: name.value + " " + lastName.value,
+                    State: state.value,
+                    Zipcode: zipcode.value,
+                }
+                const createOrderResponse = await createOrderApi(data);
+                console.log(createOrderResponse.data.id);
+                const currentDate = new Date().toISOString();
+                const dataIdProducts = [];
+                for (const item of dataTrolley.value) {
+                    const dataProduct = {
+                        Amount: item.amount,
+                        TotalPrice: item.product.Price * item.amount,
+                        IdProduct: item.product.id,
+                        creationDate: currentDate
+                    };
+                    const responseProduct = await createProductOrderApi(dataProduct);
+                    dataIdProducts.push(responseProduct.data.id);
+                }
 
-            basicAlert(
-                () => {
-                    store.commit("setTrolley", []);
-                    router.push("/products");
-                },
-                "success",
-                "Logrado",
-                "Se ha registrado tu orden de compra correctamente"
-            );
-            dialogLoader.value = false;
+                console.log("------------------------------------------3");
+                console.log(dataIdProducts);
+                const orderitem = {
+                    IdProductsOrder: dataIdProducts,
+                    IdOrder: createOrderResponse.data.id,
+                    IdUser: store.state.userId,
+                    IdentityDocument: dni.value,
+                    PictureUrl: "img"
+                }
+                await createOrdersItemApi(orderitem)
+
+                basicAlert(
+                    () => {
+                        store.commit("setTrolley", []);
+                        router.push("/products");
+                    },
+                    "success",
+                    "Logrado",
+                    "Se ha registrado tu orden de compra correctamente"
+                );
+                dialogLoader.value = false;
+            } catch (e) {
+                dialogLoader.value = false;
+                validateError("Se ha generado un error inesperado");
+            }
         }
 
         return {
@@ -220,10 +239,10 @@ export default ({
             cartSubtotal,
             dataTrolley,
             typeForm,
+            dni,
             name,
             lastName,
             address1,
-            address2,
             city,
             country,
             state,

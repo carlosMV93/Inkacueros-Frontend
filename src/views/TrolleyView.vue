@@ -99,13 +99,9 @@
                   <span>Subtotal</span>
                   <span>S/. {{ cartSubtotal }}</span>
                 </div>
-                <div class="flex justify-between border-b border-gray-500 p-3">
-                  <span>Envío</span>
-                  <span>S/. 35</span>
-                </div>
                 <div class="flex justify-between p-3 font-bold">
                   <span>Total</span>
-                  <span>S/.{{ cartSubtotal + 35 }} </span>
+                  <span>S/.{{ cartSubtotal }} </span>
                 </div>
               </div>
             </div>

@@ -5,16 +5,16 @@
       <p class="text-h6 font-weight-black">{{ product.Name }}</p>
       <div class="flex justify-center flex-1 items-center">
         <template v-if="product.id == 1">
-          <img :src="producto1" alt="" class="w-40" />
+          <img :src="producto1" alt="" class="h-40" />
         </template>
         <template v-else-if="product.id == 2">
-          <img :src="producto2" alt="" class="w-40" />
+          <img :src="producto2" alt="" class="h-40" />
         </template>
         <template v-else-if="product.id == 5">
-          <img :src="producto3" alt="" class="w-40" />
+          <img :src="producto3" alt="" class="h-40" />
         </template>
         <template v-else-if="product.id == 6">
-          <img :src="producto4" alt="" class="w-40" />
+          <img :src="producto4" alt="" class="h-40" />
         </template>
       </div>
       <p class="font-bold text-lg text-indigo pt-3">S/. {{ product.Price }}</p>

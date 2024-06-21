@@ -174,10 +174,13 @@ export default {
       const data = {
         username: username.value,
         password: password.value,
+        
       };
       loginApi(data)
         .then((response) => {
+          console.log("--------------------------------------------")
           console.log(response.data);
+          console.log("--------------------------------------------")
           dialogLoader.value = false;
           store.commit("setEmail", response.data.email);
           store.commit("setUsername", response.data.username);

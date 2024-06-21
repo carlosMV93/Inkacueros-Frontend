@@ -63,31 +63,41 @@ export default {
 
         const changePassword = () => {
             dialogLoader.value = true;
-            const data = {
-                username: forgetusername.value,
-                last_password: forgetLastPassword.value,
-                new_password: forgetNewPassword.value
+            if (forgetLastPassword.value != forgetNewPassword.value) {
+                const data = {
+                    username: forgetusername.value,
+                    last_password: forgetLastPassword.value,
+                    new_password: forgetNewPassword.value
+                }
+                forgetPasswordApi(data)
+                    .then(() => {
+                        dialogLoader.value = false;
+                        basicAlert(
+                            () => {
+                                store.commit("setEmail", "");
+                                store.commit("setUsername", "");
+                                store.commit("setRole", "");
+                                store.commit("setIsAuthenticated", false);
+                                router.push("/login");
+                            },
+                            "success",
+                            "Logrado",
+                            "Se ha cambiado correctamente la contraseña"
+                        );
+                    })
+                    .catch((error) => {
+                        dialogLoader.value = false;
+                        validateError(error.response);
+                    });
+            } else {
+                dialogLoader.value = false;
+                basicAlert(
+                    () => { },
+                    "warning",
+                    "Advertencia",
+                    "Las contraseñas son iguales"
+                );
             }
-            forgetPasswordApi(data)
-                .then(() => {
-                    dialogLoader.value = false;
-                    basicAlert(
-                        () => {
-                            store.commit("setEmail", "");
-                            store.commit("setUsername", "");
-                            store.commit("setRole", "");
-                            store.commit("setIsAuthenticated", false);
-                            router.push("/login");
-                        },
-                        "success",
-                        "Logrado",
-                        "Se ha cambiado correctamente la contraseña"
-                    );
-                })
-                .catch((error) => {
-                    dialogLoader.value = false;
-                    validateError(error.response);
-                });
         }
 
         return {

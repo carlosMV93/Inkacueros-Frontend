@@ -116,7 +116,7 @@ export default {
           email: email.value,
           password: password.value,
           is_staff: true,
-          is_superuser: true,
+          is_superuser: false,
         };
         createUserApi(data)
           .then(() => {
