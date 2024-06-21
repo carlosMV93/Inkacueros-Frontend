@@ -6,15 +6,15 @@
             </div>
             <div>
                 <div class="flex gap-3 items-center">
-                    <v-btn icon="mdi mdi-map-marker" variant="text"></v-btn>
+                    <v-icon icon="mdi mdi-map-marker" variant="text"></v-icon>
                     <p>Mz CH Lt 8 Grupo 21A Sector 1 <br> Lima - Villa el Salvador</p>
                 </div>
                 <div class="flex gap-3 pt-4 items-center">
-                    <v-btn icon="mdi mdi-email" variant="text" @click="sendEmail"></v-btn>
+                    <v-icon icon="mdi mdi-email" variant="text" @click="sendEmail"></v-icon>
                     <p>inkacuerosventas@gmail.com</p>
                 </div>
                 <div class="flex gap-3 pt-4 items-center">
-                    <v-btn icon="mdi mdi-phone" variant="text"></v-btn>
+                    <v-icon icon="mdi mdi-phone" variant="text"></v-icon>
                     <p>+51 987 920 416</p>
                 </div>
             </div>

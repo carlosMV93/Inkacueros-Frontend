@@ -1,8 +1,8 @@
 <template>
-    <template v-if="product.id == 1">
+    <template v-if="product.id == 7">
         <img :src="producto1" alt="" class="w-full" />
     </template>
-    <template v-else-if="product.id == 2">
+    <template v-else-if="product.id == 8">
         <img :src="producto2" alt="" class="w-full" />
     </template>
     <template v-else-if="product.id == 5">
@@ -13,10 +13,10 @@
     </template>
 </template>
 <script>
-import producto1 from "@/assets/products/img1.png";
-import producto2 from "@/assets/products/img2.png";
-import producto3 from "@/assets/products/img3.jpg";
-import producto4 from "@/assets/products/img4.jpg";
+import producto1 from "@/assets/products/image1.png";
+import producto2 from "@/assets/products/image2.png";
+import producto3 from "@/assets/products/image3.png";
+import producto4 from "@/assets/products/image4.png";
 
 export default {
     props: {

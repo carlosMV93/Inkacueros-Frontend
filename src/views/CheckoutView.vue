@@ -2,7 +2,7 @@
     <div class="flex justify-center items-center p-10">
         <div class="w-[80%]">
             <v-card class="mx-auto shadow-lg w-full">
-                <h1 class="text-center font-bold text-3xl py-3 text-indigo-600">Checkout</h1>
+                <h1 class="text-center font-bold text-3xl py-3 text-gray-500">Checkout</h1>
                 <v-timeline direction="horizontal" line-inset="12">
                     <v-timeline-item :dot-color="typeForm == 'DIRECTION' ? 'indigo' : 'grey'">
                         <template v-slot:opposite>
@@ -86,10 +86,6 @@
                         <div class="w-[15rem]">
                             <div class="pt-3 pb-3">
                                 <div class="flex flex-col border border-gray-400 rounded-lg">
-                                    <div class="flex justify-between border-b border-gray-400 p-3">
-                                        <span>Subtotal</span>
-                                        <span>S/. {{ cartSubtotal }}</span>
-                                    </div>
                                     <div class="flex justify-between p-3 font-bold text-gray-500">
                                         <span>Total</span>
                                         <span>S/.{{ cartSubtotal }} </span>

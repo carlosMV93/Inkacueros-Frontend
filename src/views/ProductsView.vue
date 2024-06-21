@@ -149,7 +149,6 @@ export default {
     });
 
     const goDetailProduct = async (data) => {
-      dialogLoader.value = false;
       store.commit("setProductDetail", data.product);
       router.push(`detail_product/${data.product.id}`);
     };

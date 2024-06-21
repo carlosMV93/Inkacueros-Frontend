@@ -42,6 +42,7 @@
     </div>
 </template>
 <script>
+import { useRouter } from "vue-router";
 import store from "@/store";
 import { ref } from "vue";
 
@@ -58,6 +59,7 @@ export default {
         hints: true
     }),
     setup() {
+        const router = useRouter();
         const isRotated = ref(false);
 
         const rotateIcon = () => {
@@ -70,6 +72,7 @@ export default {
             store.commit("setEmail", "");
             store.commit("setRole", "");
             store.commit("setUsername", "");
+            router.push("/");
         };
 
         return {

@@ -49,6 +49,7 @@
                   <input
                     type="text"
                     v-model="item.amount"
+                    disabled
                     class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5"
                     required
                   />
@@ -94,11 +95,7 @@
           <v-card-text>
             <p class="text-lg text-indigo-500 font-bold">Resumen del carrito</p>
             <div class="pt-3 pb-3">
-              <div class="flex flex-col border border-gray-500 rounded-lg">
-                <div class="flex justify-between border-b border-gray-500 p-3">
-                  <span>Subtotal</span>
-                  <span>S/. {{ cartSubtotal }}</span>
-                </div>
+              <div class="flex flex-col border border-gray-500 rounded-lg text-gray-500">
                 <div class="flex justify-between p-3 font-bold">
                   <span>Total</span>
                   <span>S/.{{ cartSubtotal }} </span>

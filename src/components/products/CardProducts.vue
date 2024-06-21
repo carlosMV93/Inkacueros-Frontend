@@ -4,10 +4,10 @@
       <div>InkaCueros</div>
       <p class="text-h6 font-weight-black">{{ product.Name }}</p>
       <div class="flex justify-center flex-1 items-center">
-        <template v-if="product.id == 1">
+        <template v-if="product.id == 7">
           <img :src="producto1" alt="" class="h-40" />
         </template>
-        <template v-else-if="product.id == 2">
+        <template v-else-if="product.id == 8">
           <img :src="producto2" alt="" class="h-40" />
         </template>
         <template v-else-if="product.id == 5">
@@ -23,15 +23,16 @@
     <v-card-actions class="mt-auto">
       <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="addTrolley(product)">Agregar al
         carrito</v-btn>
-      <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="goDetailProduct(product)">Ver producto</v-btn>
+      <v-btn color="deep-purple-accent-4" variant="tonal" size="small" @click="goDetailProduct(product)">Ver
+        producto</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 <script>
-import producto1 from "@/assets/products/img1.png";
-import producto2 from "@/assets/products/img2.png";
-import producto3 from "@/assets/products/img3.jpg";
-import producto4 from "@/assets/products/img4.jpg";
+import producto1 from "@/assets/products/image1.png";
+import producto2 from "@/assets/products/image2.png";
+import producto3 from "@/assets/products/image3.png";
+import producto4 from "@/assets/products/image4.png";
 
 export default {
   props: {

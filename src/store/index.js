@@ -11,6 +11,7 @@ export default createStore({
     email: "",
     role: "",
     productDetail: {},
+    orderDetail: {},
     trolley: [],
   },
   getters: {},
@@ -33,6 +34,10 @@ export default createStore({
     },
     setProductDetail(state, value) {
       state.productDetail = value;
+      localStorage.setItem(localStorageKey, JSON.stringify(state));
+    },
+    setOrderDetail(state, value) {
+      state.orderDetail = value;
       localStorage.setItem(localStorageKey, JSON.stringify(state));
     },
     setTrolley(state, value) {
