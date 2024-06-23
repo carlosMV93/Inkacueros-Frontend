@@ -3,7 +3,7 @@
     <template v-slot:[`item.idproduct`]="{ item }">
       <div>
         <div v-for="(i, index) in item.IdProductsOrder" :key="i" class="p-1 rounded-md my-1"
-          :style="{ backgroundColor: getColor(index) }">{{ i.id }}</div>
+          :style="{ backgroundColor: getColor(index) }">P00{{ i.IdProduct }}</div>
       </div>
     </template>
     <template v-slot:[`item.productName`]="{ item }">

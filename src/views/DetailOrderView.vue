@@ -39,7 +39,7 @@
         <v-card class="mx-auto shadow-lg w-full  col-span-2 p-10">
           <div class="w-full h-full rounded-md flex justify-center items-center">
             <div>
-              El correo fue enviado correctamente
+              El correo fue enviado correctamente({{ formatDate(product.creationDate)  }})
             </div>
           </div>
         </v-card>
@@ -62,6 +62,18 @@ import store from "@/store";
 import { onMounted, ref } from "vue";
 
 export default {
+  methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+      return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    }
+  },
   setup() {
     const product = ref({});
     const dataProducts = ref([]);
