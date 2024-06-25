@@ -32,7 +32,7 @@
                         <v-text-field label="Dirección" variant="underlined" color="indigo"
                             v-model="address1"></v-text-field>
                         <v-text-field label="DNI/RUC" variant="underlined" color="indigo" v-model="dni"
-                            type="number"></v-text-field>
+                            @input="validateNumber('dni')"></v-text-field>
                     </div>
                     <div class="grid grid-cols-2 gap-5">
                         <div>
@@ -46,8 +46,8 @@
                     </div>
                     <div class="grid grid-cols-2 gap-5">
                         <div>
-                            <v-text-field label="Codigo postal" variant="underlined" color="indigo"
-                                v-model="zipcode"></v-text-field>
+                            <v-text-field label="Codigo postal" variant="underlined" color="indigo" v-model="zipcode"
+                                @input="validateNumber('zipcode')"></v-text-field>
                         </div>
                         <div>
                             <v-text-field label="País" variant="underlined" color="indigo" v-model="country"
@@ -130,6 +130,14 @@ export default ({
             // Filtrar el valor del campo basado en la expresión regular
             if (!regex.test(this[field])) {
                 this[field] = this[field].replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '');
+            }
+        },
+        validateNumber(field) {
+            // Expresión regular que permite solo números
+            const regex = /^[0-9]*$/;
+            // Filtrar el valor del campo basado en la expresión regular
+            if (!regex.test(this[field])) {
+                this[field] = this[field].replace(/[^0-9]/g, '');
             }
         },
     },
